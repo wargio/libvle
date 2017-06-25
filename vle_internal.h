@@ -37,7 +37,7 @@ typedef struct {
 } se_vle_t;
 
 typedef struct {
-	u16 value;
+	u32 value;
 	u16 type;
 } vle_field_t;
 

@@ -71,7 +71,7 @@ const se_vle_t se_array[] = {
 	{ "se_lbz"    , 0x8000, 0x8FFF, 3, {{0x0F00,  8,  0,  0, 1, MEM}, {0x00F0,  4,  0,  0,  0, REG}, {0x000F,  0,  0,  0,  2, REG}, {0}, {0}}},
 	{ "se_lbh"    , 0xA000, 0xAFFF, 3, {{0x0F00,  8,  0,  0, 1, MEM}, {0x00F0,  4,  0,  0,  0, REG}, {0x000F,  0,  0,  0,  2, REG}, {0}, {0}}},
 	{ "se_li"     , 0x4800, 0x4FFF, 2, {{0x07F0,  4,  0,  0, 1, IMM}, {0x000F,  0,  0,  0,  0, REG}, {0}, {0}, {0}}},
-	{ "se_lwz"    , 0xC000, 0x8FFF, 3, {{0x0F00,  8,  0,  0, 1, MEM}, {0x00F0,  4,  0,  0,  0, REG}, {0x000F,  0,  0,  0,  2, REG}, {0}, {0}}},
+	{ "se_lwz"    , 0xC000, 0xCFFF, 3, {{0x0F00,  6,  0,  0, 1, MEM}, {0x00F0,  4,  0,  0,  0, REG}, {0x000F,  0,  0,  0,  2, REG}, {0}, {0}}},
 	{ "se_or"     , 0x4400, 0x44FF, 2, {{0x00F0,  4,  0,  0, 1, REG}, {0x000F,  0,  0,  0,  0, REG}, {0}, {0}, {0}}},
 };
 
@@ -97,10 +97,11 @@ static vle_t *find_se (const u8* buffer) {
 			for (j = 0; j < p->n; ++j) {
 				for (k = 0; k < p->n; ++k) {
 					if(p->fields[k].idx == j){
-						ret->fields[j].value = (data & p->fields[k].mask);
+						ret->fields[j].value = data & p->fields[k].mask;
 						ret->fields[j].value >>= p->fields[k].shr;
 						ret->fields[j].value <<= p->fields[k].shl;
 						ret->fields[j].value += p->fields[k].add;
+						ret->fields[j].value &= 0xFFFF;
 						ret->fields[j].type = p->fields[k].type;
 						break;
 					}
@@ -127,7 +128,7 @@ void decode (const u8* buffer, u32 size) {
 				} else if (op->fields[j].type == IMM) {
 					printf ("0x%x ", op->fields[j].value);
 				} else if (op->fields[j].type == MEM)  {
-					printf ("%d(r%d) ", op->fields[j].value, op->fields[j + 1].value);
+					printf ("0x%x(r%d) ", op->fields[j].value, op->fields[j + 1].value);
 					j++;
 				} else if (op->fields[j].type == CR)  {
 					printf ("cr%u ", op->fields[j].value);
