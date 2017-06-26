@@ -114,14 +114,14 @@ E ONLY
 70 4d ba 34  e_cmphl16i r13 4660
 73 e1 ae e0  e_cmpl16i  r1  65248
 18 a3 ab 37  e_cmpli    cr1 r3 922746880
-7f a3 02 02  e_crand    4*cr7+gt so lt
-7c 02 e9 02  e_crandc   lt eq 4*cr7+gt
-7d f0 8a 42  e_creqv    4*cr3+so 4*cr4+lt 4*cr4+gt
-7d e0 19 c2  e_crnand   4*cr3+so lt so
-7d e0 18 42  e_crnor    4*cr3+so lt so
-7d 8d 73 82  e_cror     4*cr3+lt 4*cr3+gt 4*cr3+eq
-7e 72 8b 42  e_crorc    4*cr4+so 4*cr4+eq 4*cr4+gt
-7c 00 01 82  e_crclr    lt
+7f a3 02 02  e_crand    0x1d,3,0
+7c 02 e9 02  e_crandc   0,2,0x1d
+7d f0 8a 42  e_creqv    5,16,17
+7d e0 19 c2  e_crnand   0xf,0,3
+7d e0 18 42  e_crnor    0xf,0,3
+7d 8d 73 82  e_cror     12,13,14
+7e 72 8b 42  e_crorc    19,18,17
+7c 00 01 82  e_crxor    0,0,0
 30 e3 cc 0d  e_lbz      r7  -13299(r3)
 18 e5 00 cc  e_lbzu     r7  -52(r5)
 39 0a 01 ff  e_lha      r8  511(r10)
