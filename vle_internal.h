@@ -12,20 +12,11 @@ typedef struct {
 } field_t;
 
 typedef struct {
-	u16 mask;
-	u16 shr;
-	u16 shl;
-	u16 add;
-	u8 idx;
-	u8 type;
-} field32_t;
-
-typedef struct {
 	const char* name;
 	u32 op;
 	u32 mask;
-	u16 n;
-	field32_t fields[5];
+	u16 type;
+	u16 types[5];
 } e_vle_t;
 
 typedef struct {
