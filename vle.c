@@ -3,13 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define TYPE_NONE 0
-#define TYPE_REG  1
-#define TYPE_IMM  2
-#define TYPE_MEM  3
-#define TYPE_JMP  4
-#define TYPE_CR   5
-
 #define E_NONE  0
 #define E_X     1
 #define E_XL    2
@@ -44,8 +37,8 @@
 /*
 I16A 
 */
-const e_vle_t e_array[] = {
-//	{ "name"       , op        , mask                    , type  }
+const e_vle_t e_ops[] = {
+//	{ "name"       , op        , mask                    , type   , {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_REG, TYPE_REG}}
 	{ "e_add16i"   , 0x1C000000, 0x1C000000 | E_MASK_D   , E_D    , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
 	{ "e_add2i."   , 0x70008800, 0x70008800 | E_MASK_I16A, E_I16A , {TYPE_IMM, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
 	{ "e_add2is"   , 0x70009000, 0x70009000 | E_MASK_I16A, E_I16A , {TYPE_IMM, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
@@ -58,43 +51,43 @@ const e_vle_t e_array[] = {
 	{ "e_andi"     , 0x1800C000, 0x1800C000 | E_MASK_SCI8, E_SCI8I, {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_IMM, TYPE_IMM}},
 	{ "e_andi."    , 0x1800C800, 0x1800C800 | E_MASK_SCI8, E_SCI8I, {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_IMM, TYPE_IMM}},
 	// has cr0-cr3 
-	{ "e_bge"      , 0x7A000000, 0x7A000000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_ble"      , 0x7A000000, 0x7A010000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bne"      , 0x7A000000, 0x7A020000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bns"      , 0x7A000000, 0x7A030000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_blt"      , 0x7A000000, 0x7A110000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bgt"      , 0x7A000000, 0x7A120000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_beq"      , 0x7A000000, 0x7A130000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bso"      , 0x7A000000, 0x7A140000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bc"       , 0x7A000000, 0x7A140000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bgel"     , 0x7A000001, 0x7A000001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_blel"     , 0x7A000001, 0x7A010001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bnel"     , 0x7A000001, 0x7A020001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bnsl"     , 0x7A000001, 0x7A030001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bltl"     , 0x7A000001, 0x7A110001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bgtl"     , 0x7A000001, 0x7A120001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_beql"     , 0x7A000001, 0x7A130001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bsol"     , 0x7A000001, 0x7A140001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bcl"      , 0x7A000001, 0x7A140001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bge"      , 0x7A000000, 0x7A000000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_ble"      , 0x7A000000, 0x7A010000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bne"      , 0x7A000000, 0x7A020000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bns"      , 0x7A000000, 0x7A030000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_blt"      , 0x7A000000, 0x7A110000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bgt"      , 0x7A000000, 0x7A120000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_beq"      , 0x7A000000, 0x7A130000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bso"      , 0x7A000000, 0x7A140000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bc"       , 0x7A000000, 0x7A140000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bgel"     , 0x7A000001, 0x7A000001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_blel"     , 0x7A000001, 0x7A010001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bnel"     , 0x7A000001, 0x7A020001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bnsl"     , 0x7A000001, 0x7A030001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bltl"     , 0x7A000001, 0x7A110001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bgtl"     , 0x7A000001, 0x7A120001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_beql"     , 0x7A000001, 0x7A130001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bsol"     , 0x7A000001, 0x7A140001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bcl"      , 0x7A000001, 0x7A140001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 	// has cr0-cr3  
-	{ "e_bgectr"   , 0x7A000000, 0x7A200000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_blectr"   , 0x7A000000, 0x7A210000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bnectr"   , 0x7A000000, 0x7A220000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bnsctr"   , 0x7A000000, 0x7A230000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bltctr"   , 0x7A000000, 0x7A310000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bgtctr"   , 0x7A000000, 0x7A320000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_beqctr"   , 0x7A000000, 0x7A330000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bsoctr"   , 0x7A000000, 0x7A340000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bcctr"    , 0x7A000000, 0x7A340000 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bgectrl"  , 0x7A000001, 0x7A200001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_blectrl"  , 0x7A000001, 0x7A210001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bnectrl"  , 0x7A000001, 0x7A220001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bnsctrl"  , 0x7A000001, 0x7A230001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bltctrl"  , 0x7A000001, 0x7A310001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bgtctrl"  , 0x7A000001, 0x7A320001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_beqctrl"  , 0x7A000001, 0x7A330001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bsoctrl"  , 0x7A000001, 0x7A340001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bcctrl"   , 0x7A000001, 0x7A340001 | E_MASK_BD15, E_BD15 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bgectr"   , 0x7A000000, 0x7A200000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_blectr"   , 0x7A000000, 0x7A210000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bnectr"   , 0x7A000000, 0x7A220000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bnsctr"   , 0x7A000000, 0x7A230000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bltctr"   , 0x7A000000, 0x7A310000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bgtctr"   , 0x7A000000, 0x7A320000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_beqctr"   , 0x7A000000, 0x7A330000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bsoctr"   , 0x7A000000, 0x7A340000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bcctr"    , 0x7A000000, 0x7A340000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bgectrl"  , 0x7A000001, 0x7A200001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_blectrl"  , 0x7A000001, 0x7A210001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bnectrl"  , 0x7A000001, 0x7A220001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bnsctrl"  , 0x7A000001, 0x7A230001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bltctrl"  , 0x7A000001, 0x7A310001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bgtctrl"  , 0x7A000001, 0x7A320001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_beqctrl"  , 0x7A000001, 0x7A330001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bsoctrl"  , 0x7A000001, 0x7A340001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bcctrl"   , 0x7A000001, 0x7A340001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 	{ "e_b"        , 0x78000000, 0x78000000 | E_MASK_BD24, E_BD24 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 	{ "e_bl"       , 0x78000001, 0x78000001 | E_MASK_BD24, E_BD24 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 	{ "e_cmp16i"   , 0x70009800, 0x70009800 | E_MASK_IA16, E_IA16 , {TYPE_IMM, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
@@ -155,7 +148,7 @@ const e_vle_t e_array[] = {
 };
 // page 96
 // page 1264
-const se_vle_t se_array[] = {
+const se_vle_t se_ops[] = {
 //	{ "name"      , op    , mask  , n, {{field ,shl,shr,  +, i, TYPE_REG}, ...}
 	{ "se_illegal", 0x0000, 0x0000, 0, {{0}, {0}, {0}, {0}, {0}}},
 	{ "se_isync"  , 0x0001, 0x0001, 0, {{0}, {0}, {0}, {0}, {0}}},
@@ -182,6 +175,8 @@ const se_vle_t se_array[] = {
 	{ "se_mfar"   , 0x0300, 0x03FF, 2, {{0x00F0,  4,  0,  8, 1, TYPE_REG}, {0x000F,  0,  0,  0,  0, TYPE_REG}, {0}, {0}, {0}}},
 	{ "se_add"    , 0x0400, 0x04FF, 2, {{0x00F0,  4,  0,  0, 1, TYPE_REG}, {0x000F,  0,  0,  0,  0, TYPE_REG}, {0}, {0}, {0}}},
 	{ "se_mullw"  , 0x0500, 0x05FF, 2, {{0x00F0,  4,  0,  0, 1, TYPE_REG}, {0x000F,  0,  0,  0,  0, TYPE_REG}, {0}, {0}, {0}}},
+	{ "se_sub"    , 0x0600, 0x06FF, 2, {{0x00F0,  4,  0,  0, 0, TYPE_REG}, {0x000F,  0,  0,  0,  2, TYPE_REG}, {0}, {0}, {0}}},
+	{ "se_subf"   , 0x0700, 0x07FF, 2, {{0x00F0,  4,  0,  0, 0, TYPE_REG}, {0x000F,  0,  0,  0,  2, TYPE_REG}, {0}, {0}, {0}}},
 	{ "se_cmp"    , 0x0C00, 0x0CFF, 2, {{0x00F0,  4,  0,  0, 1, TYPE_REG}, {0x000F,  0,  0,  0,  0, TYPE_REG}, {0}, {0}, {0}}},
 	{ "se_cmpl"   , 0x0D00, 0x0DFF, 2, {{0x00F0,  4,  0,  0, 1, TYPE_REG}, {0x000F,  0,  0,  0,  0, TYPE_REG}, {0}, {0}, {0}}},
 	{ "se_cmph"   , 0x0E00, 0x0EFF, 2, {{0x00F0,  4,  0,  0, 1, TYPE_REG}, {0x000F,  0,  0,  0,  0, TYPE_REG}, {0}, {0}, {0}}},
@@ -223,8 +218,6 @@ const se_vle_t se_array[] = {
 	{ "se_stb"    , 0x9000, 0x9FFF, 3, {{0x0F00,  6,  0,  0, 2, TYPE_MEM}, {0x00F0,  4,  0,  0,  0, TYPE_REG}, {0x000F,  0,  0,  0,  1, TYPE_MEM}, {0}, {0}}},
 	{ "se_sth"    , 0xB000, 0xBFFF, 3, {{0x0F00,  6,  0,  0, 2, TYPE_MEM}, {0x00F0,  4,  0,  0,  0, TYPE_REG}, {0x000F,  0,  0,  0,  1, TYPE_MEM}, {0}, {0}}},
 	{ "se_stw"    , 0xD000, 0xDFFF, 3, {{0x0F00,  6,  0,  0, 2, TYPE_MEM}, {0x00F0,  4,  0,  0,  0, TYPE_REG}, {0x000F,  0,  0,  0,  1, TYPE_MEM}, {0}, {0}}},
-	{ "se_sub"    , 0x0600, 0x06FF, 2, {{0x00F0,  4,  0,  0, 0, TYPE_REG}, {0x000F,  0,  0,  0,  2, TYPE_REG}, {0}, {0}, {0}}},
-	{ "se_subf"   , 0x0700, 0x07FF, 2, {{0x00F0,  4,  0,  0, 0, TYPE_REG}, {0x000F,  0,  0,  0,  2, TYPE_REG}, {0}, {0}, {0}}},
 	{ "se_subi"   , 0x2500, 0x25FF, 2, {{0x01F0,  4,  0,  1, 1, TYPE_IMM}, {0x000F,  0,  0,  0,  0, TYPE_REG}, {0}, {0}, {0}}},
 	{ "se_subi."  , 0x2700, 0x27FF, 2, {{0x01F0,  4,  0,  1, 1, TYPE_IMM}, {0x000F,  0,  0,  0,  0, TYPE_REG}, {0}, {0}, {0}}},
 };
@@ -390,12 +383,14 @@ static void set_e_fields(vle_t * v, const e_vle_t* p, u32 data) {
 		break;
 	case E_BD15:
 		{
-			v->n = 1;
-			v->fields[0].value = data & 0xFFE;
-			if (v->fields[0].value & 0x800) {
-				v->fields[0].value |= 0xFFFFF000;
-			}
+			v->n = 2;
+			v->fields[0].value = (data & 0xC0000) >> 18;
 			v->fields[0].type = p->types[0];
+			v->fields[1].value = data & 0xFFE;
+			if (v->fields[1].value & 0x800) {
+				v->fields[1].value |= 0xFFFFF000;
+			}
+			v->fields[1].type = p->types[1];
 		}
 		break;
 	case E_LI20:
@@ -458,12 +453,13 @@ static vle_t *find_e (const u8* buffer) {
 	u32 i;
 	u32 data = (buffer[0] << 24) | (buffer[1] << 16) | (buffer[2] << 8) | buffer[3];
 	const e_vle_t* p = NULL;
-	const u32 size = sizeof (e_array) / sizeof (e_vle_t);
+	const u32 size = sizeof (e_ops) / sizeof (e_vle_t);
 	for (i = 0; i < size; ++i) {
-		p = &e_array[i];
+		p = &e_ops[i];
 		if ((p->op & data) == p->op && (p->mask & data) == data) {
 			vle_t* ret = (vle_t*) calloc (1, sizeof (vle_t));
 			ret->name = p->name;
+			ret->size = 4;
 			ret->n = 0;
 			set_e_fields (ret, p, data);
 			return ret;
@@ -476,12 +472,13 @@ static vle_t *find_se (const u8* buffer) {
 	u32 i, j, k;
 	u16 data = (buffer[0] << 8) | buffer[1];
 	const se_vle_t* p = NULL;
-	const u32 size = sizeof (se_array) / sizeof (se_vle_t);
+	const u32 size = sizeof (se_ops) / sizeof (se_vle_t);
 	for (i = 0; i < size; ++i) {
-		p = &se_array[i];
+		p = &se_ops[i];
 		if ((p->op & data) == p->op && (p->mask & data) == data) {
 			vle_t* ret = (vle_t*) calloc (1, sizeof (vle_t));
 			ret->name = p->name;
+			ret->size = 2;
 			for (j = 0; j < p->n; ++j) {
 				for (k = 0; k < p->n; ++k) {
 					if (p->fields[k].idx == j) {
@@ -503,45 +500,37 @@ static vle_t *find_se (const u8* buffer) {
 		}
 	}
 	return NULL;
-} 
-
-void decode (const u8* buffer, u32 size) {
-	u32 i, j;
-	vle_t *op = NULL;
-	int se = 0;
-	for (i = 0; i < size; i += se ? 2 : 4) {
-		se = 0;
-		if(i + 2 < size){
-			op = find_e (&buffer[i]);
-		}
-		if(!op) {
-			se = 1;
-			op = find_se (&buffer[i]);
-		}
-		if (op) {
-			if(se)
-				printf ("%02X %02X        %-10s ", buffer[i], buffer[i+1], op->name);
-			else
-				printf ("%02X %02X %02X %02X  %-10s ", buffer[i], buffer[i+1], buffer[i+2], buffer[i+3], op->name);
-			for (j = 0; j < op->n; ++j) {
-				if (op->fields[j].type == TYPE_REG) {
-					printf ("r%-2u ", op->fields[j].value);
-				} else if (op->fields[j].type == TYPE_IMM) {
-					printf ("0x%x ", op->fields[j].value);
-				} else if (op->fields[j].type == TYPE_MEM)  {
-					printf ("0x%x(r%d) ", op->fields[j + 1].value, op->fields[j].value);
-					j++;
-				} else if (op->fields[j].type == TYPE_JMP) {
-					printf ("0x%x ", op->fields[j].value);
-				} else if (op->fields[j].type == TYPE_CR) {
-					printf ("cr%u ", op->fields[j].value);
-				}
-			}
-			printf ("\n");
-			free (op);
-			op = NULL;
-		} else {
-			printf("%02X %02X        INVALID\n", buffer[i], buffer[i+1]);
-		}
-	}
 }
+
+int vle_init(vle_handle* handle, const u8* buffer, const u32 size) {
+	if (!handle || !buffer || size < 2) {
+		return 1;
+	}
+	handle->pos = buffer;
+	handle->end = buffer + size;
+	handle->inc = 0;
+	return 0;
+}
+
+vle_t* vle_next(vle_handle* handle) {
+	vle_t *op = NULL;
+	if(!handle || handle->pos + 2 >= handle->end) {
+		return NULL;
+	}
+	handle->pos += handle->inc;
+	// 'e32' always before 'se16'
+	if(handle->end - handle->pos >= 4){
+		op = find_e (handle->pos);
+	}
+	if (!op) {
+		op = find_se (handle->pos);
+	}
+
+	handle->inc = op ? op->size : 0;
+	return op;
+}
+
+void vle_free(vle_t* instr) {
+	free(instr);
+}
+

@@ -27,15 +27,4 @@ typedef struct {
 	field_t fields[5];
 } se_vle_t;
 
-typedef struct {
-	u32 value;
-	u16 type;
-} vle_field_t;
-
-typedef struct {
-	const char* name;
-	vle_field_t fields[10];
-	u16 n;
-} vle_t;
-
 #endif
