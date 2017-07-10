@@ -7,31 +7,19 @@ a simple library to disassemble PowerPC VLE instructions.
 
 ```c
 
-vle_handle handle;
 // initialize the handler
-if (vle_init(&handle, buffer, size) != 0) {
+vle_t* instr = NULL;
+vle_handle handle;
+if (vle_init(&handle, buffer, size)) {
 	printf("failed to initialize handle\n");
 	return;
 }
+
 // loop on vle_next
 while((instr = vle_next(&handle))) {
-	printf ("%s ", instr->name);
-	for (j = 0; j < instr->n; ++j) {
-		if (instr->fields[j].type == TYPE_REG) {
-			printf ("r%-2u ", instr->fields[j].value);
-		} else if (instr->fields[j].type == TYPE_IMM) {
-			printf ("0x%x ", instr->fields[j].value);
-		} else if (instr->fields[j].type == TYPE_MEM)  {
-			printf ("0x%x(r%d) ", instr->fields[j + 1].value, instr->fields[j].value);
-			j++;
-		} else if (instr->fields[j].type == TYPE_JMP) {
-			printf ("0x%x ", instr->fields[j].value);
-		} else if (instr->fields[j].type == TYPE_CR) {
-			printf ("cr%u ", instr->fields[j].value);
-		}
-	}
-	printf ("\n");
-	// always free the instruction via the method.
+	vle_snprint(tmp, 256, addr, instr);
+	addr += instr->size;
+	printf ("%s\n", tmp);
 	vle_free(instr);
 };
 ```

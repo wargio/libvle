@@ -180,33 +180,22 @@ const uint8_t e_only []    = {0x1c, 0x83, 0x00, 0x1b, 0x70, 0xc0, 0x8c, 0x56, 0x
 
 void decode(const uint8_t* buffer, const uint32_t size) {
 	uint32_t j;
-	vle_t* instr;
+	uint64_t addr = 0;
+	char tmp[256];
+	vle_t* instr = 0;
 	vle_handle handle;
 	if (vle_init(&handle, buffer, size)) {
 		printf("failed to initialize handle\n");
 		return;
 	}
 	while((instr = vle_next(&handle))) {
+		vle_snprint(tmp, 256, addr, instr);
 		if(instr->size == 2){
-			printf ("%02X %02X        %-10s ", handle.pos[0], handle.pos[1], instr->name);
+			printf ("%02X %02X        %s\n", handle.pos[0], handle.pos[1], tmp);
 		} else {
-			printf ("%02X %02X %02X %02X  %-10s ", handle.pos[0], handle.pos[1], handle.pos[2], handle.pos[3], instr->name);
+			printf ("%02X %02X %02X %02X  %s\n", handle.pos[0], handle.pos[1], handle.pos[2], handle.pos[3], tmp);
 		}
-		for (j = 0; j < instr->n; ++j) {
-			if (instr->fields[j].type == TYPE_REG) {
-				printf ("r%-2u ", instr->fields[j].value);
-			} else if (instr->fields[j].type == TYPE_IMM) {
-				printf ("0x%x ", instr->fields[j].value);
-			} else if (instr->fields[j].type == TYPE_MEM)  {
-				printf ("0x%x(r%d) ", instr->fields[j + 1].value, instr->fields[j].value);
-				j++;
-			} else if (instr->fields[j].type == TYPE_JMP) {
-				printf ("0x%x ", instr->fields[j].value);
-			} else if (instr->fields[j].type == TYPE_CR) {
-				printf ("cr%u ", instr->fields[j].value);
-			}
-		}
-		printf ("\n");
+		addr += instr->size;
 		vle_free(instr);
 	};
 }
