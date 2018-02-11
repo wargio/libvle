@@ -1,7 +1,10 @@
-/* LGPL - Copyright 2017 - wargio */
 #ifndef LIB_PPCVLE
 #define LIB_PPCVLE
 #include <stdint.h>
+
+#ifdef __cplusplus
+	extern "C" {
+#endif
 
 typedef uint8_t ut8;
 typedef uint16_t ut16;
@@ -37,5 +40,9 @@ int vle_init(vle_handle* handle, const ut8* buffer, const ut32 size);
 vle_t* vle_next(vle_handle* handle);
 void vle_free(vle_t* instr);
 void vle_snprint(char* str, int size, ut64 addr, vle_t* instr);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
