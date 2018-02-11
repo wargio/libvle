@@ -185,14 +185,14 @@ const uint8_t testcase_1 [] = {
 0x7C, 0xC0, 0x23, 0x79  //  or. r6,r0,r4  32bit Common
 };
 const uint8_t testcase_2 [] = {
-0x44, 0x70,				//  se_or  r0, r7  16bit VLE
+0x44, 0x70				//  se_or  r0, r7  16bit VLE
 };
 const uint8_t testcase_3 [] = {
-0x7C, 0x64, 0x18, 0xF8 //  not  r4,r3  32bit com
+0x7C, 0x64, 0x18, 0xF8 //  not  r4,r3 | nor r4,r3,r3
 };
 const uint8_t testcase_4 [] = {
 0x7C, 0xC0, 0x20, 0xF8, //  nor  r6 r0 r4
-0x7C, 0xC0, 0x20, 0xF9 //  nor. r6 r0 r4
+0x7C, 0xC0, 0x20, 0xF9  //  nor. r6 r0 r4
 };
 
 const uint8_t testcase_5 [] = {
@@ -203,7 +203,7 @@ const uint8_t testcase_5 [] = {
 0x7C, 0xA0, 0x00, 0x26, // mfcr r5
 0x7C, 0x00, 0x04, 0xAC, // msync
 0x7C, 0x00, 0x07, 0x64, // tlbre
-0x7C, 0x00, 0x07, 0xA4, // tlbwe
+0x7C, 0x00, 0x07, 0xA4  // tlbwe
 };
 
 const uint8_t testcase_6 [] = {
@@ -244,8 +244,8 @@ const uint8_t testcase_8 [] ={
 const uint8_t testcase_9 [] ={
 0x51, 0xE3, 0x27, 0x28, // e_lwz r15 0x2728(r3)
 0x52, 0x03, 0x27, 0x28, // e_lwz r16 0x2728(r3)
-0x7C,0x00,0x81,0x46, // ?? 5000011e
-0x55,0x0d // ?? 40001396
+//0x7C,0x00,0x81,0x46, // ?? 5000011e
+//0x55,0x0d // ?? 40001396
 };
 
 
@@ -286,9 +286,9 @@ int decode(const uint8_t* buffer, const uint32_t size, const uint8_t req_rows) {
  decode( name, sizeof(name), req_rows)
 
 int main(int argc, char const *argv[]) {
-	TEST(example_1, 8);
-	TEST(example_2, 13);
-	TEST(se_only, 62);
+	TEST(example_1, 9);
+	TEST(example_2, 14);
+	TEST(se_only, 63);
 	TEST(e_only, 72);
 	
 	//These are wrong actually:
@@ -300,6 +300,6 @@ int main(int argc, char const *argv[]) {
 	TEST(testcase_6, 3);
 	TEST(testcase_7, 18);
 	TEST(testcase_8, 5);
-	TEST(testcase_9, 3);
+	TEST(testcase_9, 2);
 	return 0;
 }
