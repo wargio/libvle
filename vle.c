@@ -1,3 +1,4 @@
+/* LGPL - Copyright 2017-2018 - wargio */
 #include "vle.h"
 #include "vle_internal.h"
 #include <stdlib.h>

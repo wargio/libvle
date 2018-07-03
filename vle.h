@@ -1,3 +1,4 @@
+/* LGPL - Copyright 2017-2018 - wargio */
 #ifndef LIB_PPCVLE
 #define LIB_PPCVLE
 #include <stdint.h>
