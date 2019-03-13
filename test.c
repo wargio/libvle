@@ -181,8 +181,14 @@ const uint8_t e_only []    = {0x1c, 0x83, 0x00, 0x1b, 0x70, 0xc0, 0x8c, 0x56, 0x
 // Tested on Freescale Codewarrior 5.9.0 IDE, Compiler: PPC_eabi v4.3.0.224
 // Proved by HW: MPC5643L(PPCe200)
 const uint8_t testcase_1 [] = {
-0x7C, 0xC0, 0x23, 0x78, //  or  r6,r0,r4  32bit Common
-0x7C, 0xC0, 0x23, 0x79  //  or. r6,r0,r4  32bit Common
+0x7C, 0xC0, 0x23, 0x78, //  or    r6,r0,r4  32bit Common
+0x7C, 0xC0, 0x23, 0x79, //  or.   r6,r0,r4  32bit Common
+0x7C, 0x00, 0x22, 0x78, //  xor   r0,r0,r4  32bit Common
+0x7C, 0x00, 0x22, 0x79, //  xor.  r0,r0,r4  32bit Common
+0x7C, 0x00, 0x23, 0xB8, //  nand  r0,r0,r4  32bit Common
+0x7C, 0x00, 0x23, 0xB9, //  nand. r0,r0,r4  32bit Common
+0x7C, 0x00, 0x20, 0xF8, //  nand  r0,r0,r4  32bit Common
+0x7C, 0x00, 0x20, 0xF9, //  nand. r0,r0,r4  32bit Common
 };
 const uint8_t testcase_2 [] = {
 0x44, 0x70				//  se_or  r0, r7  16bit VLE
@@ -296,7 +302,7 @@ int main(int argc, char const *argv[]) {
 	TEST(e_only, 72);
 	
 	//These are wrong actually:
-	TEST(testcase_1, 2);
+	TEST(testcase_1, 8);
 	TEST(testcase_2, 1);
 	TEST(testcase_3, 1);
 	TEST(testcase_4, 2);
