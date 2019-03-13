@@ -18,11 +18,13 @@
 #define E_I16LS 9
 #define E_BD24  10
 #define E_BD15  11
-#define E_IA16  12
-#define E_LI20  13
-#define E_M     14
-#define E_XCR   15
-#define E_XLSP  16
+#define E_BD15b 12
+#define E_BD15c 13
+#define E_IA16  14
+#define E_LI20  15
+#define E_M     16
+#define E_XCR   17
+#define E_XLSP  18
 
 #define E_MASK_X    0x03FFF800
 #define E_MASK_XL   0x03FFF801
@@ -212,24 +214,12 @@ const e_vle_t e_ops[] = {
 	{ "e_bsol"     , 0x7A000001, 0x7A140001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 	{ "e_bcl"      , 0x7A000001, 0x7A140001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 	// has cr0-cr3  
-	{ "e_bgectr"   , 0x7A000000, 0x7A200000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_blectr"   , 0x7A000000, 0x7A210000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bnectr"   , 0x7A000000, 0x7A220000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bnsctr"   , 0x7A000000, 0x7A230000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bltctr"   , 0x7A000000, 0x7A310000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bgtctr"   , 0x7A000000, 0x7A320000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_beqctr"   , 0x7A000000, 0x7A330000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bsoctr"   , 0x7A000000, 0x7A340000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bcctr"    , 0x7A000000, 0x7A340000 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bgectrl"  , 0x7A000001, 0x7A200001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_blectrl"  , 0x7A000001, 0x7A210001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bnectrl"  , 0x7A000001, 0x7A220001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bnsctrl"  , 0x7A000001, 0x7A230001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bltctrl"  , 0x7A000001, 0x7A310001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bgtctrl"  , 0x7A000001, 0x7A320001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_beqctrl"  , 0x7A000001, 0x7A330001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bsoctrl"  , 0x7A000001, 0x7A340001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "e_bcctrl"   , 0x7A000001, 0x7A340001 | E_MASK_BD15, E_BD15 , {TYPE_CR, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bdz"      , 0x7A300000, 0x7A300000 | E_MASK_BD15, E_BD15c, {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bdnz"     , 0x7A200000, 0x7A200000 | E_MASK_BD15, E_BD15c, {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bc"       , 0x7A000000, 0x7A200000 | E_MASK_BD15, E_BD15b, {TYPE_IMM, TYPE_IMM, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
+	{ "e_bdzl"     , 0x7A300001, 0x7A300001 | E_MASK_BD15, E_BD15c, {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bdnzl"    , 0x7A200001, 0x7A200001 | E_MASK_BD15, E_BD15c, {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "e_bcl"      , 0x7A000001, 0x7A200001 | E_MASK_BD15, E_BD15b, {TYPE_IMM, TYPE_IMM, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
 	{ "e_b"        , 0x78000000, 0x78000000 | E_MASK_BD24, E_BD24 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 	{ "e_bl"       , 0x78000001, 0x78000001 | E_MASK_BD24, E_BD24 , {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 	{ "e_cmp16i"   , 0x70009800, 0x70009800 | E_MASK_IA16, E_IA16 , {TYPE_IMM, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
@@ -533,6 +523,28 @@ static void set_e_fields(vle_t * v, const e_vle_t* p, ut32 data) {
 				v->fields[1].value |= 0xFFFFF000;
 			}
 			v->fields[1].type = p->types[1];
+		}
+		case E_BD15b:
+		{
+			v->n = 3;
+			v->fields[0].value = (data & 0x300000) >> 20;
+			v->fields[0].type = p->types[0];
+			v->fields[1].value = (data & 0xF0000) >> 16;
+			v->fields[1].type = p->types[0];
+			v->fields[2].value = data & 0xFFFE;
+			if (v->fields[2].value & 0x8000) {
+				v->fields[2].value |= 0xFFFF0000;
+			}
+			v->fields[2].type = p->types[2];
+		}
+		case E_BD15c:
+		{
+			v->n = 1;
+			v->fields[0].value = data & 0xFFFE;
+			if (v->fields[0].value & 0x8000) {
+				v->fields[0].value |= 0xFFFF0000;
+			}
+			v->fields[0].type = p->types[0];
 		}
 			break;
 		case E_LI20:
