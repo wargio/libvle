@@ -528,6 +528,7 @@ static void set_e_fields(vle_t * v, const e_vle_t* p, ut32 data) {
 			}
 			v->fields[1].type = p->types[1];
 		}
+			break;
 		case E_BD15b:
 		{
 			v->n = 3;
@@ -541,6 +542,7 @@ static void set_e_fields(vle_t * v, const e_vle_t* p, ut32 data) {
 			}
 			v->fields[2].type = p->types[2];
 		}
+			break;
 		case E_BD15c:
 		{
 			v->n = 1;
