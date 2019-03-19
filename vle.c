@@ -25,7 +25,9 @@
 #define E_M     16
 #define E_XCR   17
 #define E_XLSP  18
-#define E_D8_N  19
+#define E_XRA   19
+#define E_D8_N  20
+
 
 #define E_MASK_X    0x03FFF800
 #define E_MASK_XL   0x03FFF801
@@ -303,16 +305,16 @@ const e_vle_t e_ops[] = {
 	{ "e_or2is"     , 0x7000D000, 0x7000D000 | E_MASK_I16L, E_I16LS, {TYPE_REG, TYPE_IMM, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
 	{ "e_ori"       , 0x1800D000, 0x1800D000 | E_MASK_SCI8, E_SCI8 , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_IMM, TYPE_IMM}},
 	{ "e_ori."      , 0x1800D800, 0x1800D800 | E_MASK_SCI8, E_SCI8 , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_IMM, TYPE_IMM}},
-	{ "e_rlw"       , 0x7C000230, 0x7C000230 | E_MASK_X   , E_X    , {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "e_rlw."      , 0x7C000231, 0x7C000231 | E_MASK_X   , E_X    , {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "e_rlwi"      , 0x7C000270, 0x7C000270 | E_MASK_X   , E_X    , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
-	{ "e_rlwi."     , 0x7C000271, 0x7C000271 | E_MASK_X   , E_X    , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
+	{ "e_rlw"       , 0x7C000230, 0x7C000230 | E_MASK_X   , E_XRA  , {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "e_rlw."      , 0x7C000231, 0x7C000231 | E_MASK_X   , E_XRA  , {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "e_rlwi"      , 0x7C000270, 0x7C000270 | E_MASK_X   , E_XRA  , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
+	{ "e_rlwi."     , 0x7C000271, 0x7C000271 | E_MASK_X   , E_XRA  , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
 	{ "e_rlwimi"    , 0x74000000, 0x74000000 | E_MASK_M   , E_M    , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_IMM, TYPE_IMM}},
 	{ "e_rlwinm"    , 0x74000001, 0x74000001 | E_MASK_M   , E_M    , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_IMM, TYPE_IMM}},
-	{ "e_slwi"      , 0x7C000070, 0x7C000070 | E_MASK_X   , E_X    , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
-	{ "e_slwi."     , 0x7C000071, 0x7C000071 | E_MASK_X   , E_X    , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
-	{ "e_srwi"      , 0x7C000470, 0x7C000470 | E_MASK_X   , E_X    , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
-	{ "e_srwi."     , 0x7C000471, 0x7C000471 | E_MASK_X   , E_X    , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
+	{ "e_slwi"      , 0x7C000070, 0x7C000070 | E_MASK_X   , E_XRA  , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
+	{ "e_slwi."     , 0x7C000071, 0x7C000071 | E_MASK_X   , E_XRA  , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
+	{ "e_srwi"      , 0x7C000470, 0x7C000470 | E_MASK_X   , E_XRA  , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
+	{ "e_srwi."     , 0x7C000471, 0x7C000471 | E_MASK_X   , E_XRA  , {TYPE_REG, TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
 	{ "e_stb"       , 0x34000000, 0x34000000 | E_MASK_D   , E_D    , {TYPE_REG, TYPE_MEM, TYPE_IMM, TYPE_NONE, TYPE_NONE}},
 	{ "e_stbu"      , 0x18000400, 0x18000400 | E_MASK_D8  , E_D8   , {TYPE_REG, TYPE_MEM, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "e_sth"       , 0x5C000000, 0x5C000000 | E_MASK_D   , E_D    , {TYPE_REG, TYPE_MEM, TYPE_REG, TYPE_NONE, TYPE_NONE}},
@@ -427,9 +429,20 @@ static void set_e_fields(vle_t * v, const e_vle_t* p, ut32 data) {
 		case E_X:
 		{
 			v->n = 3;
-			v->fields[0].value = (data & 0x3E00000) >> 24;
+			v->fields[0].value = (data & 0x3E00000) >> 21;
 			v->fields[0].type = p->types[0];
 			v->fields[1].value = (data & 0x1F0000) >> 16;
+			v->fields[1].type = p->types[1];
+			v->fields[2].value = (data & 0xF800) >> 11;
+			v->fields[2].type = p->types[2];
+		}
+			break;
+		case E_XRA:
+		{
+			v->n = 3;
+			v->fields[0].value = (data & 0x1F0000) >> 16;
+			v->fields[0].type = p->types[0];
+			v->fields[1].value = (data & 0x3E00000) >> 21;
 			v->fields[1].type = p->types[1];
 			v->fields[2].value = (data & 0xF800) >> 11;
 			v->fields[2].type = p->types[2];
@@ -629,11 +642,11 @@ static void set_e_fields(vle_t * v, const e_vle_t* p, ut32 data) {
 		case E_LI20:
 		{
 			v->n = 2;
-			v->fields[0].value = (data & 0x3E00000) >> 21;
+			v->fields[0].value = (data & 0x03E00000) >> 21;
 			v->fields[0].type = p->types[0];
-			v->fields[1].value = ((data & 0x1F0000) >> 5);
+			v->fields[1].value = ((data & 0x001F0000) >> 5);
 			v->fields[1].value |= ((data & 0x7800) << 5);
-			v->fields[1].value |= (data & 0x3FF);
+			v->fields[1].value |= (data & 0x7FF);
 			v->fields[1].type = p->types[1];
 			if (v->fields[1].value & 0x80000) {
 				v->fields[1].value = 0xFFF00000 | v->fields[1].value;
