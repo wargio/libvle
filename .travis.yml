@@ -1,0 +1,17 @@
+language: c
+
+compiler:
+  - clang
+  - gcc
+
+os:
+  - linux
+  - osx
+
+script:
+  - make all
+  - make test-chain
+  - ./test-chain
+
+git:
+depth: 3
