@@ -38,8 +38,8 @@ const test_t test_se_only[] = {
 	{{0x03, 0x07, 0x00, 0x00}, SZ_SE , "se_mfar r7 r24"},
 	{{0x04, 0x7F, 0x00, 0x00}, SZ_SE , "se_add r31 r7"},
 	{{0x05, 0x43, 0x00, 0x00}, SZ_SE , "se_mullw r3 r4"},
-	{{0x06, 0x21, 0x00, 0x00}, SZ_SE , "se_sub r2"},
-	{{0x07, 0xAD, 0x00, 0x00}, SZ_SE , "se_subf r26"},
+	{{0x06, 0x21, 0x00, 0x00}, SZ_SE , "se_sub r1 r2"},
+	{{0x07, 0xAD, 0x00, 0x00}, SZ_SE , "se_subf r29 r26"},
 	{{0x0C, 0x10, 0x00, 0x00}, SZ_SE , "se_cmp r0 r1"},
 	{{0x0D, 0x76, 0x00, 0x00}, SZ_SE , "se_cmpl r6 r7"},
 	{{0x0E, 0xCF, 0x00, 0x00}, SZ_SE , "se_cmph r31 r28"},
@@ -59,7 +59,7 @@ const test_t test_se_only[] = {
 	{{0x46, 0x10, 0x00, 0x00}, SZ_SE , "se_and r0 r1"},
 	{{0x47, 0x01, 0x00, 0x00}, SZ_SE , "se_and. r1 r0"},
 	{{0x4C, 0xF4, 0x00, 0x00}, SZ_SE , "se_li r4 0x4f"},
-	{{0x61, 0x2B, 0x00, 0x00}, SZ_SE , "se_bclri r27 0x800006e"},
+	{{0x61, 0x2B, 0x00, 0x00}, SZ_SE , "se_bclri r27 0x12"},
 	{{0x63, 0x17, 0x00, 0x00}, SZ_SE , "se_bgeni r7 0x11"},
 	{{0x64, 0x10, 0x00, 0x00}, SZ_SE , "se_bseti r0 0x1"},
 	{{0x66, 0x74, 0x00, 0x00}, SZ_SE , "se_btsti r4 0x7"},
@@ -151,8 +151,63 @@ const test_t test_e_only[] = {
 	{{0x7E, 0x72, 0x8B, 0x42}, SZ_E  , "e_crorc cr19 cr18 cr17"},
 	{{0x7E, 0xD2, 0x02, 0x30}, SZ_E  , "e_rlw r2 r18 r0"},
 	{{0x7F, 0xA3, 0x02, 0x02}, SZ_E  , "e_crand cr29 cr3 cr0"},
+	{{0x18, 0xa3, 0x10, 0x3c}, SZ_E  , "e_ldmvcsrrw 0x3c(r3)"},
+	{{0x18, 0xc3, 0x10, 0x40}, SZ_E  , "e_ldmvdsrrw 0x40(r3)"},
+	{{0x18, 0x03, 0x10, 0x30}, SZ_E  , "e_ldmvgprw 0x30(r3)"},
+	{{0x18, 0x23, 0x10, 0x34}, SZ_E  , "e_ldmvgprw 0x34(r3)"},
+	{{0x18, 0x83, 0x10, 0x38}, SZ_E  , "e_ldmvgprw 0x38(r3)"},
+	{{0x18, 0xa3, 0x11, 0x24}, SZ_E  , "e_stmvcsrrw 0x24(r3)"},
+	{{0x18, 0xc3, 0x11, 0x28}, SZ_E  , "e_stmvdsrrw 0x28(r3)"},
+	{{0x18, 0x03, 0x11, 0x18}, SZ_E  , "e_stmvgprw 0x18(r3)"},
+	{{0x18, 0x23, 0x11, 0x2c}, SZ_E  , "e_stmvgprw 0x2c(r3)"},
+	{{0x18, 0x83, 0x11, 0x1c}, SZ_E  , "e_stmvgprw 0x1c(r3)"},
+	{{0x18, 0x23, 0x10, 0x20}, SZ_E  , "e_ldmvgprw 0x20(r3)"},
+	{{0x18, 0x83, 0x10, 0x0c}, SZ_E  , "e_ldmvgprw 0xc(r3)"},
+	{{0x18, 0xa3, 0x11, 0x10}, SZ_E  , "e_stmvcsrrw 0x10(r3)"},
+	{{0x18, 0xc3, 0x11, 0x00}, SZ_E  , "e_stmvdsrrw 0x0(r3)"},
+	{{0x18, 0x03, 0x11, 0x14}, SZ_E  , "e_stmvgprw 0x14(r3)"},
+	{{0x18, 0x23, 0x11, 0x04}, SZ_E  , "e_stmvgprw 0x4(r3)"},
+	{{0x18, 0x83, 0x11, 0x08}, SZ_E  , "e_stmvgprw 0x8(r3)"},
 };
 
+const test_t test_powerpc_only[] = {
+	{{0x7C, 0x12, 0x30, 0x50}, SZ_PPC, "subf r0 r18 r6"},
+	{{0x7C, 0x12, 0x30, 0x51}, SZ_PPC, "subf. r0 r18 r6"},
+	{{0x7C, 0x12, 0x34, 0x50}, SZ_PPC, "subfo r0 r18 r6"},
+	{{0x7C, 0x12, 0x34, 0x51}, SZ_PPC, "subfo. r0 r18 r6"},
+	{{0x7C, 0x12, 0x30, 0x10}, SZ_PPC, "subfc r0 r18 r6"},
+	{{0x7C, 0x12, 0x30, 0x11}, SZ_PPC, "subfc. r0 r18 r6"},
+	{{0x7C, 0x12, 0x34, 0x10}, SZ_PPC, "subfco r0 r18 r6"},
+	{{0x7C, 0x12, 0x34, 0x11}, SZ_PPC, "subfco. r0 r18 r6"},
+	{{0x7C, 0x12, 0x31, 0x10}, SZ_PPC, "subfe r0 r18 r6"},
+	{{0x7C, 0x12, 0x31, 0x11}, SZ_PPC, "subfe. r0 r18 r6"},
+	{{0x7C, 0x12, 0x35, 0x10}, SZ_PPC, "subfeo r0 r18 r6"},
+	{{0x7C, 0x12, 0x35, 0x11}, SZ_PPC, "subfeo. r0 r18 r6"},
+	{{0x7C, 0x62, 0x00, 0xD0}, SZ_PPC, "neg r3 r2"},
+	{{0x7C, 0x62, 0x00, 0xD1}, SZ_PPC, "neg. r3 r2"},
+	{{0x7C, 0x62, 0x04, 0xD0}, SZ_PPC, "nego r3 r2"},
+	{{0x7C, 0x62, 0x04, 0xD1}, SZ_PPC, "nego. r3 r2"},
+	{{0x7C, 0x60, 0x01, 0x06}, SZ_PPC, "wrtee r3"},
+	{{0x7C, 0x00, 0x81, 0x46}, SZ_PPC, "wrteei 0x1"},
+	{{0x7C, 0x00, 0x01, 0x46}, SZ_PPC, "wrteei 0x0"},
+	{{0x7C, 0x62, 0x60, 0x96}, SZ_PPC, "mulhw r3 r2 r12"},
+	{{0x7C, 0x62, 0x60, 0x97}, SZ_PPC, "mulhw. r3 r2 r12"},
+	{{0x7C, 0x62, 0x60, 0x16}, SZ_PPC, "mulhwu r3 r2 r12"},
+	{{0x7C, 0x62, 0x60, 0x17}, SZ_PPC, "mulhwu. r3 r2 r12"},
+	{{0x7C, 0x62, 0x60, 0xAE}, SZ_PPC, "lbzx r3 r2 r12"},
+	{{0x7C, 0x62, 0x60, 0xEE}, SZ_PPC, "lbzux r3 r2 r12"},
+	{{0x7C, 0x62, 0x61, 0xEE}, SZ_PPC, "stbux r3 r2 r12"},
+	{{0x7C, 0x62, 0x63, 0x2E}, SZ_PPC, "sthx r3 r2 r12"},
+	{{0x7C, 0x62, 0x63, 0x6E}, SZ_PPC, "sthux r3 r2 r12"},
+	{{0x7C, 0x62, 0x60, 0x30}, SZ_PPC, "slw r3 r2 r12"},
+	{{0x7C, 0x62, 0x60, 0x31}, SZ_PPC, "slw. r3 r2 r12"},
+	{{0x7C, 0x62, 0x64, 0x30}, SZ_PPC, "srw r3 r2 r12"},
+	{{0x7C, 0x62, 0x64, 0x31}, SZ_PPC, "srw. r3 r2 r12"},
+	{{0x7C, 0x62, 0x66, 0x30}, SZ_PPC, "sraw r3 r2 r12"},
+	{{0x7C, 0x62, 0x66, 0x31}, SZ_PPC, "sraw. r3 r2 r12"},
+	{{0x7C, 0x62, 0x66, 0x70}, SZ_PPC, "srawi r3 r2 r12"},
+	{{0x7C, 0x62, 0x66, 0x71}, SZ_PPC, "srawi. r3 r2 r12"},
+};
 
 const test_t test_gh_issues[] = {
 	/* VLE SE related */
@@ -239,49 +294,48 @@ const test_t test_gh_issues[] = {
 int test_decoding(const char* name, const test_t* tests, const uint32_t n_tests) {
 	fprintf (stderr, "Test: %s\n", name);
 	vle_t* instr;
-	int ok = 0, matches;
+	int ok = 0;
 	char tmp[256];
-	uint64_t addr = 0x08000000;
+	uint32_t addr = 0x08000000;
 	for (uint32_t i = 0; i < n_tests; ++i) {
-		const uint8_t* bytes = tests[i].bytes;
-		if (instr = vle_decode_one(bytes, tests[i].size)) {
+		if ((instr = vle_decode_one(tests[i].bytes, tests[i].size))) {
 			vle_snprint(tmp, 256, addr, instr);
 			if (strcmp(tmp, tests[i].expected)) {
 				ok = 1;
 				if(instr->size == 2){
 					fprintf (stderr, "[fail] %02X %02X       [%08x]  %s (expected %s)\n",
-						bytes[0], bytes[1],
+						tests[i].bytes[0], tests[i].bytes[1],
 						addr, tmp, tests[i].expected);
 				} else {
 					fprintf (stderr, "[fail] %02X %02X %02X %02X [%08x]  %s (expected %s)\n",
-						bytes[0], bytes[1], bytes[2], bytes[3],
+						tests[i].bytes[0], tests[i].bytes[1], tests[i].bytes[2], tests[i].bytes[3],
 						addr, tmp, tests[i].expected);
 				}
 			} else {
 				if(instr->size == 2){
 					printf ("[ ok ] %02X %02X       [%08x]  %s\n",
-						bytes[0], bytes[1],
+						tests[i].bytes[0], tests[i].bytes[1],
 						addr, tmp);
 				} else {
 					printf ("[ ok ] %02X %02X %02X %02X [%08x]  %s\n",
-						bytes[0], bytes[1], bytes[2], bytes[3],
+						tests[i].bytes[0], tests[i].bytes[1], tests[i].bytes[2], tests[i].bytes[3],
 						addr, tmp);
 				}
 			}
 			addr += instr->size;
 			vle_free(instr);
 		} else {
-			if(instr->size == 2){
+			if(tests[i].size == 2) {
 				fprintf (stderr, "[null] %02X %02X         [%08x]  %s\n",
-					bytes[0], bytes[1],
+					tests[i].bytes[0], tests[i].bytes[1],
 					addr, tests[i].expected);
 			} else {
 				fprintf (stderr, "[null] %02X %02X %02X %02X [%08x]  %s\n",
-					bytes[0], bytes[1], bytes[2], bytes[3],
+					tests[i].bytes[0], tests[i].bytes[1], tests[i].bytes[2], tests[i].bytes[3],
 					addr, tests[i].expected);
 			}
 			ok = 1;
-			addr += instr->size;
+			addr += tests[i].size;
 		}
 	};
 	return ok;
@@ -294,6 +348,7 @@ int main(int argc, char const *argv[]) {
 	int ok = 0;
 	TEST(test_se_only, ok);
 	TEST(test_e_only, ok);
+	TEST(test_powerpc_only, ok);
 	TEST(test_gh_issues, ok);
 	return ok;
 }
