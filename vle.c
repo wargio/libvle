@@ -589,9 +589,6 @@ static void set_e_fields(vle_t * v, const e_vle_t* p, ut32 data) {
 			v->fields[0].type = p->types[0];
 			v->fields[1].value = (data & 0x1F0000) >> 5;
 			v->fields[1].value |= (data & 0x7FF);
-			if (v->fields[1].value & 0x8000) {
-				v->fields[1].value = 0xFFF8000 | v->fields[1].value;
-			}
 			v->fields[1].type = p->types[1];
 		}
 			break;
@@ -601,10 +598,7 @@ static void set_e_fields(vle_t * v, const e_vle_t* p, ut32 data) {
 			v->fields[0].value = (data & 0x3E00000) >> 21;
 			v->fields[0].type = p->types[0];
 			v->fields[1].value = (data & 0x1F0000) >> 5;
-			v->fields[1].value |= (data & 0x3FF);
-			if (v->fields[1].value & 0x4000) {
-				v->fields[1].value = 0xFFF8000 | v->fields[1].value;
-			}
+			v->fields[1].value |= (data & 0x7FF);
 			v->fields[1].type = p->types[1];
 		}
 			break;
