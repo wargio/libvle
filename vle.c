@@ -32,7 +32,7 @@
 
 #define E_MASK_X    0x03FFF800
 #define E_MASK_XL   0x03FFF801
-#define E_MASK_D    0x01FFFFFF
+#define E_MASK_D    0x03FFFFFF
 #define E_MASK_D8   0x03FF00FF
 #define E_MASK_I16A 0x03FF07FF
 #define E_MASK_SCI8 0x03FF07FF
