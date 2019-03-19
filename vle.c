@@ -74,8 +74,6 @@ const ppc_t ppc_ops[] = {
 //	{ "name"       , op        , mask                    , type   , {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_REG, TYPE_REG}}
 	{ "add"        , 0x7C000214, 0x7C000214 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "add."       , 0x7C000214, 0x7C000211 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "addo"       , 0x7C000214, 0x7C000614 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "addo."      , 0x7C000214, 0x7C000615 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "addc"       , 0x7C000014, 0x7C000014 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "addc."      , 0x7C000014, 0x7C000011 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "addco"      , 0x7C000014, 0x7C000414 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
@@ -88,6 +86,8 @@ const ppc_t ppc_ops[] = {
 	{ "addme."     , 0x7C0001D4, 0x7C0001D1 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "addmeo"     , 0x7C0001D4, 0x7C0005D4 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "addmeo."    , 0x7C0001D4, 0x7C0005D5 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "addo"       , 0x7C000214, 0x7C000614 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "addo."      , 0x7C000214, 0x7C000615 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "addze"      , 0x7C000194, 0x7C000194 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "addze."     , 0x7C000194, 0x7C000191 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "addzeo"     , 0x7C000194, 0x7C000594 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
@@ -96,14 +96,6 @@ const ppc_t ppc_ops[] = {
 	{ "and."       , 0x7C000038, 0x7C000039 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "andc"       , 0x7C000078, 0x7C000078 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "andc."      , 0x7C000078, 0x7C000079 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "or"         , 0x7C000378, 0x7C000378 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "or."        , 0x7C000378, 0x7C000379 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "xor"        , 0x7C000278, 0x7C000278 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "xor."       , 0x7C000279, 0x7C000279 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "nand"       , 0x7C0003B8, 0x7C0003B8 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "nand."      , 0x7C0003B9, 0x7C0003B9 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "nor"        , 0x7C0000F8, 0x7C0000F8 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "nor."       , 0x7C0000F8, 0x7C0000F9 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "brinc"      , 0x1000020F, 0x1000020F | F_MASK_EVX ,   F_EVX, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "cmp"        , 0x7C000000, 0x7C000000 | F_MASK_CMP ,   F_CMP, {TYPE_CR, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "cmpl"       , 0x7C000040, 0x7C000040 | F_MASK_CMP ,   F_CMP, {TYPE_CR, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
@@ -148,13 +140,32 @@ const ppc_t ppc_ops[] = {
 	{ "ici"        , 0x7C00078C, 0x7C00078C | F_MASK_DCI ,   F_DCI, {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 	{ "icread"     , 0x7C0007CC, 0x7C0007CC | F_MASK_X   ,     F_X, {TYPE_NONE, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	//apply only X instead of A for lt, gt, eq
-	{ "isellt"     , 0x7C00001E, 0x7C00001E | F_MASK_X   ,     F_A, {TYPE_NONE, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "iselgt"     , 0x7C00001E, 0x7C00005E | F_MASK_X   ,     F_A, {TYPE_NONE, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "iseleq"     , 0x7C00001E, 0x7C00009E | F_MASK_X   ,     F_A, {TYPE_NONE, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "isel"       , 0x7C00001E, 0x7C00001E | F_MASK_A   ,     F_A, {TYPE_NONE, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "iseleq"     , 0x7C00001E, 0x7C00009E | F_MASK_X   ,     F_A, {TYPE_NONE, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "iselgt"     , 0x7C00001E, 0x7C00005E | F_MASK_X   ,     F_A, {TYPE_NONE, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "isellt"     , 0x7C00001E, 0x7C00001E | F_MASK_X   ,     F_A, {TYPE_NONE, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "lbepx"      , 0x7C0000BE, 0x7C0000BE | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "lbzux"      , 0x7C0000EE, 0x7C0000EE | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "lhaux"      , 0x7C0002EE, 0x7C0002EE | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "mfcr"       , 0x7C000026, 0x7C000026 | E_MASK_XL  ,   E_XL , {TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "mfdcrux"    , 0x7C000246, 0x7C000246 | F_MASK_EXT ,   F_EXT, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "mfdcrx"     , 0x7C000206, 0x7C000206 | F_MASK_EXT ,   F_EXT, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "msync"      , 0x7C0004AC, 0x7C0004AC | F_MASK_XFX ,   F_XFX, {TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "mtcrf"      , 0x7C000120, 0x7C000120 | E_MASK_XL  ,   E_XL , {TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "mullw"      , 0x7C0001D6, 0x7C0001D6 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "mullw."     , 0x7C0001D6, 0x7C0001D7 | F_MASK_XO  ,    F_XO, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "nand"       , 0x7C0003B8, 0x7C0003B8 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "nand."      , 0x7C0003B9, 0x7C0003B9 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "nor"        , 0x7C0000F8, 0x7C0000F8 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "nor."       , 0x7C0000F8, 0x7C0000F9 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "or"         , 0x7C000378, 0x7C000378 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "or."        , 0x7C000378, 0x7C000379 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "stwx"       , 0x7C00012E, 0x7C00012E | E_MASK_XL  ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "stwux"      , 0x7C00016E, 0x7C00016E | E_MASK_XL  ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "tlbre"      , 0x7C000764, 0x7C000764 | F_MASK_XFX ,  F_NONE, {TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "tlbwe"      , 0x7C0007A4, 0x7C0007A4 | F_MASK_XFX ,  F_NONE, {TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "xor"        , 0x7C000278, 0x7C000278 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "xor."       , 0x7C000279, 0x7C000279 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
  	{ "lhax"       , 0x7C0002AE, 0x7C0002AE | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
  	{ "lhbrx"      , 0x7C00062C, 0x7C00062C | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
  	{ "lhepx"      , 0x7C00023E, 0x7C00023E | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
@@ -171,18 +182,10 @@ const ppc_t ppc_ops[] = {
  	{ "mbar"       , 0x7C00002E, 0x7C00002E | F_MASK_XFX ,   F_XFX, {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
  	{ "mcrxr"      , 0x7C000400, 0x7C000400 | F_MASK_XER ,   F_XER, {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
  	{ "mfdcr"      , 0x7C000286, 0x7C000286 | F_MASK_MFPR,  F_MFPR, {TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "mfdcrux"    , 0x7C000246, 0x7C000246 | F_MASK_EXT ,   F_EXT, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "mfdcrx"     , 0x7C000206, 0x7C000206 | F_MASK_EXT ,   F_EXT, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
  	{ "mfmsr"      , 0x7C0000A6, 0x7C0000A6 | F_MASK_XFX ,   F_XFX, {TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
  	{ "mfspr"      , 0x7C0002A6, 0x7C0002A6 | F_MASK_MFPR,  F_MFPR, {TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
- 	{ "mtspr"      , 0x7C0003A6, 0x7C0003A6 | F_MASK_MTPR,  F_MTPR, {TYPE_IMM, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
  	{ "mtmsr"      , 0x7C000124, 0x7C000124 | F_MASK_XFX ,   F_XFX, {TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "msync"      , 0x7C0004AC, 0x7C0004AC | F_MASK_XFX ,   F_XFX, {TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "tlbre"      , 0x7C000764, 0x7C000764 | F_MASK_XFX ,  F_NONE, {TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "tlbwe"      , 0x7C0007A4, 0x7C0007A4 | F_MASK_XFX ,  F_NONE, {TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "stwx"       , 0x7C00012E, 0x7C00012E | E_MASK_XL  ,   E_XL , {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
-	{ "mfcr"       , 0x7C000026, 0x7C000026 | E_MASK_XL  ,   E_XL , {TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
-	{ "mtcrf"      , 0x7C000120, 0x7C000120 | E_MASK_XL  ,   E_XL , {TYPE_REG, TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE}}, //crf rossz
+ 	{ "mtspr"      , 0x7C0003A6, 0x7C0003A6 | F_MASK_MTPR,  F_MTPR, {TYPE_IMM, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 }; 
 
 const e_vle_t e_ops[] = {
@@ -844,6 +847,23 @@ vle_t* vle_next(vle_handle* handle) {
 	return op;
 }
 
+vle_t* vle_decode_one(const ut8* buffer, const ut32 size) {
+	vle_t *op = NULL;
+	if (size < 2) {
+		return NULL;
+	}
+	if (size > 3) {
+		op = find_ppc (buffer);
+	}
+	if (!op && size > 3) {
+		op = find_e (buffer);
+	}
+	if (!op && size > 1) {
+		op = find_se (buffer);
+	}
+	return op;
+}
+
 void vle_free(vle_t* instr) {
 	free (instr);
 }
@@ -861,7 +881,7 @@ void vle_snprint(char* str, int size, ut64 addr, vle_t* instr) {
 			add += snprintf (str + add, bufsize - add, " 0x%x(r%d)", instr->fields[i + 1].value, instr->fields[i].value);
 			i++;
 		} else if (instr->fields[i].type == TYPE_JMP) {
-			add += snprintf (str + add, bufsize - add, " 0x%" PFMT64x, addr + instr->fields[i].value);
+			add += snprintf (str + add, bufsize - add, " 0x%x", addr + instr->fields[i].value);
 		} else if (instr->fields[i].type == TYPE_CR) {
 			add += snprintf (str + add, bufsize - add, " cr%u", instr->fields[i].value);
 		}

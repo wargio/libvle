@@ -39,6 +39,7 @@ typedef struct {
 
 int vle_init(vle_handle* handle, const ut8* buffer, const ut32 size);
 vle_t* vle_next(vle_handle* handle);
+vle_t* vle_decode_one(const ut8* buffer, const ut32 size);
 void vle_free(vle_t* instr);
 void vle_snprint(char* str, int size, ut64 addr, vle_t* instr);
 
