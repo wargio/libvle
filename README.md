@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/wargio/libvle.svg?branch=master)]
+
 libvle
 ======
 
