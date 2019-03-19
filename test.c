@@ -301,8 +301,8 @@ int test_decoding(const char* name, const test_t* tests, const uint32_t n_tests)
 	vle_t* instr;
 	int ok = 0;
 	char tmp[256];
-	uint32_t addr = 0x08000000;
-	for (uint32_t i = 0; i < n_tests; ++i) {
+	uint32_t i, addr = 0x08000000;
+	for (i = 0; i < n_tests; ++i) {
 		if ((instr = vle_decode_one(tests[i].bytes, tests[i].size))) {
 			vle_snprint(tmp, 256, addr, instr);
 			if (strcmp(tmp, tests[i].expected)) {
