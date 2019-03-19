@@ -10,8 +10,7 @@ os:
 
 script:
   - make all
-  - make test-chain
-  - ./test-chain
+  - make test-chain && ./test
 
 git:
 depth: 3
