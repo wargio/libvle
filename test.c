@@ -189,6 +189,7 @@ const uint8_t testcase_1 [] = {
 0x7C, 0x00, 0x23, 0xB9, //  nand. r0,r0,r4  32bit Common
 0x7C, 0x00, 0x20, 0xF8, //  nand  r0,r0,r4  32bit Common
 0x7C, 0x00, 0x20, 0xF9, //  nand. r0,r0,r4  32bit Common
+0x7C, 0x07, 0xD8, 0xEE, //  lbzux r0,r7,r2  32bit Common
 };
 const uint8_t testcase_2 [] = {
 0x44, 0x70				//  se_or  r0, r7  16bit VLE
@@ -302,7 +303,7 @@ int main(int argc, char const *argv[]) {
 	TEST(e_only, 72);
 	
 	//These are wrong actually:
-	TEST(testcase_1, 8);
+	TEST(testcase_1, 9);
 	TEST(testcase_2, 1);
 	TEST(testcase_3, 1);
 	TEST(testcase_4, 2);
