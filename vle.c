@@ -613,8 +613,8 @@ static void set_e_fields(vle_t * v, const e_vle_t* p, ut32 data) {
 		{
 			v->n = 1;
 			v->fields[0].value = data & 0x3FFFFFE;
-			if (v->fields[0].value & 0x3000000) {
-				v->fields[0].value |= 0xFC000000;
+			if (v->fields[0].value & 0x1000000) {
+				v->fields[0].value |= 0xFE000000;
 			}
 			v->fields[0].type = p->types[0];
 		}
