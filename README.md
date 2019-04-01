@@ -10,17 +10,17 @@ a simple library to disassemble PowerPC VLE instructions.
 ```c
 
 // initialize the handler
+ut32 start_address = 0x08004000
 vle_t* instr = NULL;
 vle_handle handle;
-if (vle_init(&handle, buffer, size)) {
+if (vle_init(&handle, buffer, size, start_address)) {
 	printf("failed to initialize handle\n");
 	return;
 }
 
 // loop on vle_next
 while((instr = vle_next(&handle))) {
-	vle_snprint(tmp, 256, addr, instr);
-	addr += instr->size;
+	vle_snprint(tmp, 256, instr);
 	printf ("%s\n", tmp);
 	vle_free(instr);
 };
