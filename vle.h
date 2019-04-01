@@ -22,7 +22,8 @@ typedef uint64_t ut64;
 typedef struct {
 	const ut8* end;
 	const ut8* pos;
-	ut16 inc;
+	ut16       inc;
+	ut32       addr;
 } vle_handle;
 
 typedef struct {
@@ -33,15 +34,15 @@ typedef struct {
 typedef struct {
 	const char* name;
 	vle_field_t fields[10];
-	ut16 n;
-	ut16 size;
+	ut16        n;
+	ut16        size;
 } vle_t;
 
-int vle_init(vle_handle* handle, const ut8* buffer, const ut32 size);
+int vle_init(vle_handle* handle, const ut8* buffer, const ut32 size, ut32 start_address);
 vle_t* vle_next(vle_handle* handle);
-vle_t* vle_decode_one(const ut8* buffer, const ut32 size);
+vle_t* vle_decode_one(const ut8* buffer, const ut32 size, ut32 current_address);
 void vle_free(vle_t* instr);
-void vle_snprint(char* str, int size, ut32 addr, vle_t* instr);
+void vle_snprint(char* str, int size, vle_t* instr);
 
 #ifdef __cplusplus
 }
