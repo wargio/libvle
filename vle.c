@@ -29,6 +29,7 @@
 #define E_XL     20
 #define E_XLSP   21
 #define E_XRA    22
+#define F_CFH    23
 
 #define E_MASK_X    0x03FFF800
 #define E_MASK_XL   0x03FFF801
@@ -73,6 +74,8 @@
 #define F_MASK_XER   0x03FFF800
 #define F_MASK_MFPR  0x03FFF800
 #define F_MASK_MTPR  0x03FFF800
+#define F_MASK_CFH   0x03E0F800
+
 
 
 const ppc_t ppc_ops[] = {
@@ -236,6 +239,39 @@ const ppc_t ppc_ops[] = {
 	{ "wrteei"     , 0x7C000146, 0x7C000146 | E_MASK_XL  ,  F_X_EI, {TYPE_IMM, TYPE_NONE, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
 	{ "xor"        , 0x7C000278, 0x7C000278 | F_MASK_X   ,   F_XRA, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 	{ "xor."       , 0x7C000279, 0x7C000279 | F_MASK_X   ,   F_XRA, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	// Floating point
+	{ "efsabs"     , 0x100002C4, 0x100002C4 | F_MASK_EXT ,   F_EXT, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efsadd"     , 0x100002C0, 0x100002C0 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efscfh"     , 0x100402D1, 0x100402D1 | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efscfsf"    , 0x100002D3, 0x100002D3 | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efscfsi"    , 0x100002D1, 0x100002D1 | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efscfuf"    , 0x100002D2, 0x100002D2 | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efscfui"    , 0x100002D0, 0x100002D0 | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efscmpgt"   , 0x100002CC, 0x100002CC | F_MASK_CMP ,   F_CMP, {TYPE_CR, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efscmpeq"   , 0x100002CE, 0x100002CE | F_MASK_CMP ,   F_CMP, {TYPE_CR, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efscmplt"   , 0x100002CD, 0x100002CD | F_MASK_CMP ,   F_CMP, {TYPE_CR, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efscth"     , 0x100402D5, 0x100402D5 | F_MASK_CFH ,   F_CFH, {TYPE_CR, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efsctsf"    , 0x100002D7, 0x100002D7 | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efsctsi"    , 0x100002D5, 0x100002D5 | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efsctsiz"   , 0x100002DA, 0x100002DA | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efsctuf"    , 0x100002D6, 0x100002D6 | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efsctui"    , 0x100002D4, 0x100002D4 | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efsctuiz"   , 0x100002D8, 0x100002D8 | F_MASK_CFH ,   F_CFH, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efsdiv"     , 0x100002C9, 0x100002C9 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efsmadd"    , 0x100002C2, 0x100002C2 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efsmax"     , 0x100002B0, 0x100002B0 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efsmin"     , 0x100002B1, 0x100002B1 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efsmsub"    , 0x100002C3, 0x100002C3 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efsmul"     , 0x100002C8, 0x100002C8 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efsnabs"    , 0x100002C5, 0x100002C5 | F_MASK_EXT ,     F_X, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efsneg"     , 0x100002C6, 0x100002C6 | F_MASK_EXT ,     F_X, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efsnmadd"   , 0x100002CA, 0x100002CA | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efsnmsub"   , 0x100002CB, 0x100002CB | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efssqrt"    , 0x100002C7, 0x100002C7 | F_MASK_EXT ,     F_X, {TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE, TYPE_NONE}},
+	{ "efssub"     , 0x100002C1, 0x100002C1 | F_MASK_X   ,     F_X, {TYPE_REG, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efststeq"   , 0x100002DE, 0x100002DE | F_MASK_CMP ,   F_CMP, {TYPE_CR, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efststgt"   , 0x100002DC, 0x100002DC | F_MASK_CMP ,   F_CMP, {TYPE_CR, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
+	{ "efststlt"   , 0x100002DD, 0x100002DD | F_MASK_CMP ,   F_CMP, {TYPE_CR, TYPE_REG, TYPE_REG, TYPE_NONE, TYPE_NONE}},
 }; 
 
 const e_vle_t e_ops[] = {
@@ -829,6 +865,15 @@ static void set_ppc_fields(vle_t * v, const ppc_t* p, ut32 data, ut32 addr) {
 			v->n = 1;
 			v->fields[0].value = (data & 0x3E00000) >> 21;
 			v->fields[0].type = p->types[0];
+		}
+			break;
+		case F_CFH:
+		{
+			v->n = 2;
+			v->fields[0].value = (data & 0x3E00000) >> 21;
+			v->fields[0].type = p->types[0];
+			v->fields[1].value = (data & 0xF800) >> 11;
+			v->fields[1].type = p->types[1];
 		}
 			break;
 		case F_XER:
