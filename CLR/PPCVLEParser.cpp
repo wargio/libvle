@@ -4,7 +4,7 @@
 VLEt^ PPCVLEParser::DecodeOne(array<System::Byte>^ buf, System::Int32 adr, System::UInt32 base) {
 	pin_ptr<ut8> bufptr = &buf[adr];
 
-	vle_t* instr_n = vle_decode_one(bufptr, buf->Length, base);
+	vle_t* instr_n = vle_decode_one(bufptr, buf->Length - adr, base);
 	if (instr_n == 0) {
 		return nullptr;
 	}
